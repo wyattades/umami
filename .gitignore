@@ -12,6 +12,7 @@
 /.next/
 /out/
 /prisma/schema.prisma
+/.vercel/
 
 # production
 /build
