@@ -15,7 +15,7 @@
     "start": "next start",
     "start-env": "node -r dotenv/config scripts/start-env.js",
     "build-app": "next build",
-    "build-tracker": "rollup -c rollup.tracker.config.js",
+    "build-tracker": "rollup -c rollup.tracker.config.js && cp public/umami.js public/sip.js",
     "build-db": "npm-run-all copy-db-schema build-db-client",
     "build-lang": "npm-run-all format-lang compile-lang",
     "build-geo": "node scripts/build-geo.js",
