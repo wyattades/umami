@@ -11,8 +11,8 @@
 # next.js
 /.next/
 /out/
-/prisma/schema.prisma
 /.vercel/
+/prisma/
 
 # production
 /build
@@ -36,3 +36,6 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+*.dev.yml
+

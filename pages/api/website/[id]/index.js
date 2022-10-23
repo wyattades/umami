@@ -1,5 +1,5 @@
-import { deleteWebsite, getWebsiteById } from 'lib/queries';
-import { methodNotAllowed, ok, unauthorized } from 'lib/response';
+import { methodNotAllowed, ok, unauthorized } from 'next-basics';
+import { deleteWebsite, getWebsiteById } from 'queries';
 import { allowQuery } from 'lib/auth';
 import { useCors } from 'lib/middleware';
 
