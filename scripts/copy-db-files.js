@@ -5,17 +5,12 @@ const path = require('path');
 const del = require('del');
 
 function getDatabaseType(url = process.env.DATABASE_URL) {
-  const type = process.env.DATABASE_TYPE || (url && url.split(':')[0]);
+  let type = process.env.DATABASE_TYPE || (url && url.split(':')[0]);
 
-  if (
-    type === 'coachroachdb' ||
-    ((type === 'postgresql' || type === 'postgres') && url.includes('cockroachlabs.cloud'))
-  ) {
-    return 'cockroachdb';
-  }
+  if (type === 'postgres') type = 'postgresql';
 
-  if (type === 'postgres') {
-    return 'postgresql';
+  if (type === 'coachroachdb' || (type === 'postgresql' && url?.includes('cockroachlabs.cloud'))) {
+    type = 'cockroachdb';
   }
 
   return type;

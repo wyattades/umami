@@ -11,10 +11,6 @@ export async function savePageView(...args) {
 }
 
 async function relationalQuery({ websiteId }, { session: { id: sessionId }, url, referrer }) {
-  // TEMP
-  // eslint-disable-next-line no-console
-  console.log('savePageView:', websiteId, sessionId, url);
-
   return prisma.client.pageview.create({
     data: {
       websiteId,
