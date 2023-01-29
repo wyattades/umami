@@ -8,9 +8,9 @@ export async function getPageviewParams(...args) {
   });
 }
 
-async function relationalQuery(website_id, start_at, end_at, column, table, filters = {}) {
-  const { parseFilters, rawQuery } = prisma;
-  const params = [website_id, start_at, end_at];
+async function relationalQuery(websiteId, start_at, end_at, column, table, filters = {}) {
+  const { parseFilters, rawQuery, toUuid } = prisma;
+  const params = [websiteId, start_at, end_at];
   const { pageviewQuery, sessionQuery, eventQuery, joinSession } = parseFilters(
     table,
     column,
@@ -22,8 +22,9 @@ async function relationalQuery(website_id, start_at, end_at, column, table, filt
     `select url x,
       count(*) y
     from ${table}
+      ${` join website on ${table}.website_id = website.website_id`}
       ${joinSession}
-    where ${table}.website_id=$1
+    where website.website_uuid = $1${toUuid()}
       and ${table}.created_at between $2 and $3
       and ${table}.url like '%?%'
       ${pageviewQuery}

@@ -11,6 +11,18 @@
       "value": "เพิ่มบัญชี"
     }
   ],
+  "label.add-column": [
+    {
+      "type": 0,
+      "value": "สร้างคอลัมน์"
+    }
+  ],
+  "label.add-filter": [
+    {
+      "type": 0,
+      "value": "สร้างตัวกรอง"
+    }
+  ],
   "label.add-website": [
     {
       "type": 0,
@@ -284,7 +296,7 @@
   "label.required": [
     {
       "type": 0,
-      "value": "ต้องการ"
+      "value": "จำเป็น"
     }
   ],
   "label.reset": [
@@ -303,6 +315,12 @@
     {
       "type": 0,
       "value": "บันทึก"
+    }
+  ],
+  "label.search": [
+    {
+      "type": 0,
+      "value": "ค้นหา"
     }
   ],
   "label.settings": [
@@ -389,6 +407,12 @@
       "value": "เว็บไซต์"
     }
   ],
+  "label.yesterday": [
+    {
+      "type": 0,
+      "value": "เมื่อวาน"
+    }
+  ],
   "message.active-users": [
     {
       "type": 0,
@@ -444,7 +468,7 @@
   "message.confirm-reset": [
     {
       "type": 0,
-      "value": "คุณแน่ใจหรือไม่ว่าต้องการรีเซตข้อมูลสถิติของ "
+      "value": "คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตข้อมูลสถิติของ "
     },
     {
       "type": 1,
@@ -470,7 +494,7 @@
   "message.edit-dashboard": [
     {
       "type": 0,
-      "value": "Edit dashboard"
+      "value": "แก้ไขแดชบอร์ด"
     }
   ],
   "message.failure": [
@@ -766,7 +790,7 @@
   "metrics.query-parameters": [
     {
       "type": 0,
-      "value": "Query parameters"
+      "value": "พารามิเตอร์ URL"
     }
   ],
   "metrics.referrers": [

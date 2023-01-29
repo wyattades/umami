@@ -9,15 +9,10 @@ export async function getSessionMetrics(...args) {
   });
 }
 
-async function relationalQuery(website_id, start_at, end_at, field, filters = {}) {
-  const { parseFilters, rawQuery } = prisma;
-  const params = [website_id, start_at, end_at];
-  const { pageviewQuery, sessionQuery, joinSession } = parseFilters(
-    'pageview',
-    null,
-    filters,
-    params,
-  );
+async function relationalQuery(websiteId, { startDate, endDate, field, filters = {} }) {
+  const { parseFilters, rawQuery, toUuid } = prisma;
+  const params = [websiteId, startDate, endDate];
+  const { pageviewQuery, sessionQuery, joinSession } = parseFilters(null, filters, params);
 
   return rawQuery(
     `select ${field} x, count(*) y
@@ -25,8 +20,10 @@ async function relationalQuery(website_id, start_at, end_at, field, filters = {}
     where x.session_id in (
       select pageview.session_id
       from pageview
+        join website 
+          on pageview.website_id = website.website_id
         ${joinSession}
-      where pageview.website_id=$1
+      where website.website_uuid = $1${toUuid()}
       and pageview.created_at between $2 and $3
       ${pageviewQuery}
       ${sessionQuery}
@@ -37,29 +34,19 @@ async function relationalQuery(website_id, start_at, end_at, field, filters = {}
   );
 }
 
-async function clickhouseQuery(website_id, start_at, end_at, field, filters = {}) {
+async function clickhouseQuery(websiteId, { startDate, endDate, field, filters = {} }) {
   const { parseFilters, getBetweenDates, rawQuery } = clickhouse;
-  const params = [website_id];
-  const { pageviewQuery, sessionQuery, joinSession } = parseFilters(
-    'pageview',
-    null,
-    filters,
-    params,
-    'session_uuid',
-  );
+  const params = [websiteId];
+  const { pageviewQuery, sessionQuery } = parseFilters(null, filters, params);
 
   return rawQuery(
     `select ${field} x, count(*) y
-    from session as x
-    where x.session_uuid in (
-      select pageview.session_uuid
-      from pageview
-        ${joinSession}
-      where pageview.website_id=$1
-      and ${getBetweenDates('pageview.created_at', start_at, end_at)}
+    from event as x
+    where website_id=$1
+      and event_name = ''
+      and ${getBetweenDates('created_at', startDate, endDate)}
       ${pageviewQuery}
       ${sessionQuery}
-    )
     group by x
     order by y desc`,
     params,
