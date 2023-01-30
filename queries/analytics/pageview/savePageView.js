@@ -10,11 +10,14 @@ export async function savePageView(...args) {
   });
 }
 
-async function relationalQuery({ websiteId }, { session: { id: sessionId }, url, referrer }) {
+async function relationalQuery({ websiteId }, { session, url, referrer }) {
+  // eslint-disable-next-line no-console
+  console.log('savePageView:', websiteId, url, session);
+
   return prisma.client.pageview.create({
     data: {
       websiteId,
-      sessionId,
+      sessionId: session.id,
       url: url?.substring(0, URL_LENGTH),
       referrer: referrer?.substring(0, URL_LENGTH),
     },
